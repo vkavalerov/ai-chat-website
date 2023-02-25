@@ -5,18 +5,17 @@ import {
   Container,
   Stack,
   Center,
+  Box,
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import { Configuration, OpenAIApi } from "openai";
 
 export default function Chat(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const [response, setResponse] = useState("");
-  const [message, setMessage] = useState("");
-  const router = useRouter();
+  const [message, setMessage] = useState("Me: ");
   const configuration = new Configuration({
     apiKey: props.openaiApiKey,
   });
@@ -24,10 +23,9 @@ export default function Chat(
 
   return (
     <>
-      <Container size="xs">
+      <Container size="md">
         <Stack
           sx={(theme) => ({
-            height: 300,
             justifyContent: "center",
           })}
         >
@@ -37,6 +35,9 @@ export default function Chat(
           <Textarea
             placeholder="Type your message here"
             label="Message"
+            variant="filled"
+            value={message}
+            minRows={30}
             onChange={(e) => {
               setMessage(e.currentTarget.value);
             }}
@@ -44,7 +45,7 @@ export default function Chat(
           <Button
             onClick={() => {
               aiResponse(message, openai).then((res) => {
-                setResponse(res);
+                setMessage(message + "\nAI:" + res + "\nMe: ");
               });
             }}
           >
