@@ -156,7 +156,7 @@ async function aiResponse(
       model: "text-curie-001",
       prompt: message,
       temperature: temperature / 100,
-      max_tokens: 10000,
+      max_tokens: 1000,
     });
     console.log(response);
     if (response.data.choices[0].text) {
