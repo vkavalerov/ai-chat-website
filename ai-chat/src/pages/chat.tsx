@@ -17,6 +17,7 @@ export default function Chat(
 ) {
   const [response, setResponse] = useState("");
   const [message, setMessage] = useState("Human: ");
+  const [temperature, setTemperature] = useState(50);
   const configuration = new Configuration({
     apiKey: props.openaiApiKey,
   });
@@ -43,6 +44,10 @@ export default function Chat(
         Temperature
       </Text>
       <Slider
+        value={temperature}
+        onChange={(value) => {
+          setTemperature(value);
+        }}
         sx={{
           width: "40%",
           margin: "auto",
@@ -76,7 +81,7 @@ export default function Chat(
         />
         <Button
           onClick={() => {
-            aiResponse(message, openai).then((res) => {
+            aiResponse(message, openai, temperature).then((res) => {
               setMessage(
                 message + "\nAI: " + res.replaceAll("\n", " ") + "\nHuman: "
               );
@@ -93,13 +98,17 @@ export default function Chat(
   );
 }
 
-async function aiResponse(message: string, openai: OpenAIApi): Promise<string> {
+async function aiResponse(
+  message: string,
+  openai: OpenAIApi,
+  temperature: number
+): Promise<string> {
   try {
     console.log(message);
     const response = await openai.createCompletion({
       model: "text-ada-001",
       prompt: message,
-      temperature: 0.7,
+      temperature: temperature / 100,
       max_tokens: 1000,
       top_p: 1,
       frequency_penalty: 0.0,
