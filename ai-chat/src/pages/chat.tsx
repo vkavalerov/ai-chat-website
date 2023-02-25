@@ -81,7 +81,7 @@ export default function Chat(
         }}
       ></Box>
       <Text size="lg" weight={300} align="center">
-        Total tokens used: {usedTokens}
+        Total tokens used: {usedTokens}, {(usedTokens / 1000) * 0.002}$
       </Text>
       <Stack justify="space-around" spacing="xl" align="center">
         <Textarea
