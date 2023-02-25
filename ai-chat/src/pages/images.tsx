@@ -1,4 +1,12 @@
-import { Button, Text, Textarea, Stack, Box, Image } from "@mantine/core";
+import {
+  Button,
+  Text,
+  Textarea,
+  Stack,
+  Box,
+  Image,
+  Center,
+} from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
@@ -83,7 +91,18 @@ export default function Images(
         <Text size="md" weight={700}>
           {response}
         </Text>
-        <Image radius="md" src={imageUrl} width={1024} height={1024} />
+        <Center>
+          <Image
+            radius="md"
+            src={imageUrl}
+            width="100%"
+            alt="With custom placeholder"
+            withPlaceholder
+            placeholder={
+              <Text align="center">There will be generated Image</Text>
+            }
+          />
+        </Center>
       </Stack>
     </>
   );
