@@ -25,41 +25,35 @@ export default function Chat(
   return (
     <>
       <Container size="xs">
-        <Center
+        <Stack
           sx={(theme) => ({
-            height: "100vh",
+            height: 300,
+            justifyContent: "center",
           })}
         >
-          <Stack
-            sx={(theme) => ({
-              height: 300,
-              justifyContent: "center",
-            })}
+          <Text size="xl" weight={700} align="center">
+            Chat with AI (version 0.0.1)
+          </Text>
+          <Textarea
+            placeholder="Type your message here"
+            label="Message"
+            onChange={(e) => {
+              setMessage(e.currentTarget.value);
+            }}
+          />
+          <Button
+            onClick={() => {
+              aiResponse(message, openai).then((res) => {
+                setResponse(res);
+              });
+            }}
           >
-            <Text size="xl" weight={700} align="center">
-              Chat with AI (version 0.0.1)
-            </Text>
-            <Textarea
-              placeholder="Type your message here"
-              label="Message"
-              onChange={(e) => {
-                setMessage(e.currentTarget.value);
-              }}
-            />
-            <Button
-              onClick={() => {
-                aiResponse(message, openai).then((res) => {
-                  setResponse(res);
-                });
-              }}
-            >
-              pls answer
-            </Button>
-            <Text size="md" weight={700}>
-              {response}
-            </Text>
-          </Stack>
-        </Center>
+            pls answer
+          </Button>
+          <Text size="md" weight={700}>
+            {response}
+          </Text>
+        </Stack>
       </Container>
     </>
   );
@@ -72,7 +66,7 @@ async function aiResponse(message: string, openai: OpenAIApi): Promise<string> {
       model: "text-ada-001",
       prompt: message,
       temperature: 0.7,
-      max_tokens: 10,
+      max_tokens: 1000,
     });
     console.log(response);
     if (response.data.choices[0].text) {
