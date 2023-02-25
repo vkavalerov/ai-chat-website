@@ -109,10 +109,7 @@ export default function Chat(
                 model: "text-curie-001",
                 prompt: message,
                 temperature: temperature / 100,
-                max_tokens: 256,
-                top_p: 1,
-                frequency_penalty: 0,
-                presence_penalty: 0,
+                max_tokens: 2000,
               });
               if (response.data.choices[0].text) {
                 setUsedTokens(usedTokens + response.data.usage!.total_tokens);
