@@ -157,9 +157,6 @@ async function aiResponse(
       prompt: message,
       temperature: temperature / 100,
       max_tokens: 10000,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
     });
     console.log(response);
     if (response.data.choices[0].text) {
