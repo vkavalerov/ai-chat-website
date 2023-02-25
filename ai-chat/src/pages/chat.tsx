@@ -6,6 +6,7 @@ import {
   Stack,
   Center,
   Box,
+  Slider,
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
@@ -23,39 +24,69 @@ export default function Chat(
 
   return (
     <>
-      <Container size="md">
-        <Stack
-          sx={(theme) => ({
-            justifyContent: "center",
-          })}
+      <Box
+        sx={{
+          height: "50px",
+          width: "100%",
+        }}
+      ></Box>
+      <Text size="xl" weight={800} align="center">
+        Chat with AI (version 0.0.1)
+      </Text>
+      <Box
+        sx={{
+          height: "30px",
+          width: "100%",
+        }}
+      ></Box>
+      <Text size="md" weight={300} align="center">
+        Temperature
+      </Text>
+      <Slider
+        sx={{
+          width: "40%",
+          margin: "auto",
+        }}
+        radius="md"
+        marks={[
+          { value: 20, label: "20%" },
+          { value: 50, label: "50%" },
+          { value: 80, label: "80%" },
+        ]}
+      />
+      <Box
+        sx={{
+          height: "30px",
+          width: "100%",
+        }}
+      ></Box>
+      <Stack justify="space-around" spacing="xl" align="center">
+        <Textarea
+          sx={{
+            width: "40%",
+          }}
+          placeholder="Type your message here"
+          label="Message"
+          variant="filled"
+          value={message}
+          minRows={20}
+          onChange={(e) => {
+            setMessage(e.currentTarget.value);
+          }}
+        />
+        <Button
+          onClick={() => {
+            aiResponse(message, openai).then((res) => {
+              setMessage(message + "\n" + res + "\nHuman: ");
+            });
+          }}
         >
-          <Text size="xl" weight={700} align="center">
-            Chat with AI (version 0.0.1)
-          </Text>
-          <Textarea
-            placeholder="Type your message here"
-            label="Message"
-            variant="filled"
-            value={message}
-            minRows={20}
-            onChange={(e) => {
-              setMessage(e.currentTarget.value);
-            }}
-          />
-          <Button
-            onClick={() => {
-              aiResponse(message, openai).then((res) => {
-                setMessage(message + "\n" + res + "\nHuman: ");
-              });
-            }}
-          >
-            pls answer
-          </Button>
-          <Text size="md" weight={700}>
-            {response}
-          </Text>
-        </Stack>
-      </Container>
+          Press this to AI😎
+        </Button>
+        <Text size="md" weight={700}>
+          {response}
+        </Text>
+      </Stack>
     </>
   );
 }
