@@ -37,7 +37,7 @@ export default function Chat(
             label="Message"
             variant="filled"
             value={message}
-            minRows={30}
+            minRows={20}
             onChange={(e) => {
               setMessage(e.currentTarget.value);
             }}
