@@ -45,7 +45,7 @@ export default function Chat(
           <Button
             onClick={() => {
               aiResponse(message, openai).then((res) => {
-                setMessage(message + res + "\nHuman: ");
+                setMessage(message + "\n" + res + "\nHuman: ");
               });
             }}
           >
