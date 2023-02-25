@@ -60,6 +60,7 @@ export default function Chat(
       </Text>
       <Slider
         value={temperature}
+        disabled={isAnswering}
         onChange={(value) => {
           setTemperature(value);
         }}
