@@ -18,6 +18,7 @@ export default function Chat(
   const [response, setResponse] = useState("");
   const [message, setMessage] = useState("");
   const [temperature, setTemperature] = useState(50);
+  const [isAnswering, setIsAnswering] = useState(false);
   const configuration = new Configuration({
     apiKey: props.openaiApiKey,
   });
@@ -71,6 +72,7 @@ export default function Chat(
             width: "40%",
           }}
           placeholder="Type your message here"
+          disabled={isAnswering}
           label="Message"
           variant="filled"
           value={message}
@@ -80,9 +82,12 @@ export default function Chat(
           }}
         />
         <Button
+          disabled={isAnswering}
           onClick={() => {
+            setIsAnswering(true);
             aiResponse(message, openai, temperature).then((res) => {
               setMessage(message + "\n" + res.replaceAll("\n", "") + "\n");
+              setIsAnswering(false);
             });
           }}
         >
