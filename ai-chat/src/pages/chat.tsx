@@ -64,7 +64,7 @@ export default function Chat(
           setTemperature(value);
         }}
         sx={{
-          width: "20%",
+          width: "50%",
           margin: "auto",
         }}
         radius="md"
@@ -86,7 +86,7 @@ export default function Chat(
       <Stack justify="space-around" spacing="xl" align="center">
         <Textarea
           sx={{
-            width: "40%",
+            width: "80%",
           }}
           placeholder="Type your message here"
           disabled={isAnswering}
