@@ -6,6 +6,7 @@ import {
   Box,
   Image,
   Center,
+  TextInput,
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
@@ -21,6 +22,7 @@ export default function Images(
   const [isAnswering, setIsAnswering] = useState(false);
   const [money, setMoney] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
+  const [password, setPassword] = useState("");
   const configuration = new Configuration({
     apiKey: props.openaiApiKey,
   });
@@ -60,30 +62,45 @@ export default function Images(
             setMessage(e.currentTarget.value);
           }}
         />
+        <TextInput
+          sx={{
+            width: "80%",
+          }}
+          placeholder="Type password here"
+          disabled={isAnswering}
+          label="Password"
+          variant="filled"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.currentTarget.value);
+          }}
+        />
         <Button
           disabled={isAnswering}
           onClick={async () => {
-            setIsAnswering(true);
-            try {
-              console.log(message);
-              const response = await openai.createImage({
-                prompt: message,
-                n: 1,
-                size: "1024x1024",
-              });
-              if (response.data.data[0].url) {
-                setImageUrl(response.data.data[0].url);
-                setMoney(money + 2);
-                setResponse("");
-                setIsAnswering(false);
-              } else {
-                setResponse("Error");
+            if (password === "lolipop") {
+              setIsAnswering(true);
+              try {
+                console.log(message);
+                const response = await openai.createImage({
+                  prompt: message,
+                  n: 1,
+                  size: "1024x1024",
+                });
+                if (response.data.data[0].url) {
+                  setImageUrl(response.data.data[0].url);
+                  setMoney(money + 2);
+                  setResponse("");
+                  setIsAnswering(false);
+                } else {
+                  setResponse("Error");
+                  setIsAnswering(false);
+                }
+              } catch (e) {
+                console.log(e);
+                setResponse("Error: " + e);
                 setIsAnswering(false);
               }
-            } catch (e) {
-              console.log(e);
-              setResponse("Error: " + e);
-              setIsAnswering(false);
             }
           }}
         >
