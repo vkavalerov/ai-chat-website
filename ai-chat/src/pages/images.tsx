@@ -37,7 +37,6 @@ export default function Images(
         Total money spend:{money / 100}$
       </Text>
       <Stack justify="space-around" spacing="xl" align="center">
-        <Image radius="md" src={imageUrl} width={1024} height={1024} />
         <Textarea
           sx={{
             width: "80%",
@@ -84,6 +83,7 @@ export default function Images(
         <Text size="md" weight={700}>
           {response}
         </Text>
+        <Image radius="md" src={imageUrl} width={1024} height={1024} />
       </Stack>
     </>
   );
