@@ -15,7 +15,7 @@ export default function Chat(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const [response, setResponse] = useState("");
-  const [message, setMessage] = useState("Me: ");
+  const [message, setMessage] = useState("Human: ");
   const configuration = new Configuration({
     apiKey: props.openaiApiKey,
   });
@@ -45,7 +45,7 @@ export default function Chat(
           <Button
             onClick={() => {
               aiResponse(message, openai).then((res) => {
-                setMessage(message + "\nAI:" + res + "\nMe: ");
+                setMessage(message + res + "\nHuman: ");
               });
             }}
           >
@@ -68,6 +68,10 @@ async function aiResponse(message: string, openai: OpenAIApi): Promise<string> {
       prompt: message,
       temperature: 0.7,
       max_tokens: 1000,
+      top_p: 1,
+      frequency_penalty: 0.0,
+      presence_penalty: 0.6,
+      stop: [" Human:", " AI:"],
     });
     console.log(response);
     if (response.data.choices[0].text) {
