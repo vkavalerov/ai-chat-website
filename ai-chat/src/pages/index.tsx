@@ -10,6 +10,7 @@ export default function Home() {
         Hi, you are on AI test page.
       </Text>
       <Button onClick={() => router.push("/chat")}>Chat with AI</Button>
+      <Button onClick={() => router.push("/images")}>Images</Button>
     </>
   );
 }

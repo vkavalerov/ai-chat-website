@@ -1,25 +1,16 @@
-import {
-  Button,
-  Text,
-  Textarea,
-  Container,
-  Stack,
-  Center,
-  Box,
-  Slider,
-} from "@mantine/core";
+import { Button, Text, Textarea, Stack, Box, Image } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 
-export default function Chat(
+export default function Images(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const [response, setResponse] = useState("");
   const [message, setMessage] = useState("");
-  const [temperature, setTemperature] = useState(50);
   const [isAnswering, setIsAnswering] = useState(false);
-  const [usedTokens, setUsedTokens] = useState(0);
+  const [money, setMoney] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
   const configuration = new Configuration({
     apiKey: props.openaiApiKey,
   });
@@ -38,53 +29,15 @@ export default function Chat(
       </Text>
       <Box
         sx={{
-          height: "30px",
+          height: "50px",
           width: "100%",
         }}
       ></Box>
       <Text size="lg" weight={300} align="center">
-        Temperature
-      </Text>
-      <Text
-        size="sm"
-        weight={200}
-        align="center"
-        sx={{
-          margin: "auto",
-          width: "40%",
-        }}
-      >
-        Controls randomness: Lowering results in less random completions. As the
-        temperature approaches zero, the model will become deterministic and
-        repetitive.
-      </Text>
-      <Slider
-        value={temperature}
-        disabled={isAnswering}
-        onChange={(value) => {
-          setTemperature(value);
-        }}
-        sx={{
-          width: "50%",
-          margin: "auto",
-        }}
-        radius="md"
-        marks={[
-          { value: 20, label: "20%" },
-          { value: 50, label: "50%" },
-          { value: 80, label: "80%" },
-        ]}
-      />
-      <Box
-        sx={{
-          height: "20px",
-          width: "100%",
-        }}
-      ></Box>
-      <Text size="lg" weight={300} align="center">
-        Total tokens used: {usedTokens}, {(usedTokens / 1000) * 0.002}$
+        Total money spend:{money / 100}$
       </Text>
       <Stack justify="space-around" spacing="xl" align="center">
+        <Image radius="md" src={imageUrl} width={1024} height={1024} />
         <Textarea
           sx={{
             width: "80%",
@@ -94,7 +47,6 @@ export default function Chat(
           label="Message"
           variant="filled"
           value={message}
-          minRows={20}
           onChange={(e) => {
             setMessage(e.currentTarget.value);
           }}
@@ -105,23 +57,15 @@ export default function Chat(
             setIsAnswering(true);
             try {
               console.log(message);
-              const response = await openai.createCompletion({
-                model: "text-curie-001",
+              const response = await openai.createImage({
                 prompt: message,
-                temperature: temperature / 100,
-                max_tokens: 256,
-                top_p: 1,
-                frequency_penalty: 0,
-                presence_penalty: 0,
+                n: 1,
+                size: "1024x1024",
               });
-              if (response.data.choices[0].text) {
-                setUsedTokens(usedTokens + response.data.usage!.total_tokens);
-                setMessage(
-                  message +
-                    "\n" +
-                    response.data.choices[0].text.replaceAll("\n", "") +
-                    "\n"
-                );
+              console.log(response);
+              if (response.data.data[0].url) {
+                setImageUrl(response.data.data[0].url);
+                setMoney(money + 2);
                 setResponse("");
                 setIsAnswering(false);
               } else {
