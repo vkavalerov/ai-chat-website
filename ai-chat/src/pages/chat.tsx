@@ -156,7 +156,7 @@ async function aiResponse(
       model: "text-curie-001",
       prompt: message,
       temperature: temperature / 100,
-      max_tokens: 1000,
+      max_tokens: 10000,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
