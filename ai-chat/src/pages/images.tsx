@@ -71,7 +71,6 @@ export default function Images(
                 n: 1,
                 size: "1024x1024",
               });
-              console.log(response);
               if (response.data.data[0].url) {
                 setImageUrl(response.data.data[0].url);
                 setMoney(money + 2);
