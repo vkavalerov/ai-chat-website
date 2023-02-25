@@ -78,7 +78,7 @@ export default function Images(
         <Button
           disabled={isAnswering}
           onClick={async () => {
-            if (password === "lolipop") {
+            if (password === props.imagePassword) {
               setIsAnswering(true);
               try {
                 console.log(message);
@@ -137,6 +137,7 @@ export async function getStaticProps() {
   return {
     props: {
       openaiApiKey: process.env.OPENAI_API_KEY,
+      imagePassword: process.env.IMAGE_PASSWORD,
     },
   };
 }
