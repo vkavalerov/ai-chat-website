@@ -72,6 +72,7 @@ async function aiResponse(message: string, openai: OpenAIApi): Promise<string> {
       model: "text-ada-001",
       prompt: message,
       temperature: 0.7,
+      max_tokens: 10,
     });
     console.log(response);
     if (response.data.choices[0].text) {
