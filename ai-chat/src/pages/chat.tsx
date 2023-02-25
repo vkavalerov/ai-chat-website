@@ -104,7 +104,7 @@ async function aiResponse(
   try {
     console.log(message);
     const response = await openai.createCompletion({
-      model: "text-ada-001",
+      model: "text-davinci-003",
       prompt: message,
       temperature: temperature / 100,
       max_tokens: 1000,
