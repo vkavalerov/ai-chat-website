@@ -101,6 +101,10 @@ export default function Images(
                 setResponse("Error: " + e);
                 setIsAnswering(false);
               }
+            } else if (password === "") {
+              setResponse("No password provided");
+            } else {
+              setResponse("Wrong password");
             }
           }}
         >
