@@ -19,6 +19,7 @@ export default function Chat(
   const [message, setMessage] = useState("");
   const [temperature, setTemperature] = useState(50);
   const [isAnswering, setIsAnswering] = useState(false);
+  const [usedTokens, setUsedTokens] = useState(0);
   const configuration = new Configuration({
     apiKey: props.openaiApiKey,
   });
@@ -63,7 +64,7 @@ export default function Chat(
           setTemperature(value);
         }}
         sx={{
-          width: "40%",
+          width: "20%",
           margin: "auto",
         }}
         radius="md"
@@ -75,10 +76,13 @@ export default function Chat(
       />
       <Box
         sx={{
-          height: "30px",
+          height: "20px",
           width: "100%",
         }}
       ></Box>
+      <Text size="lg" weight={300} align="center">
+        Total tokens used: {usedTokens}
+      </Text>
       <Stack justify="space-around" spacing="xl" align="center">
         <Textarea
           sx={{
@@ -96,12 +100,38 @@ export default function Chat(
         />
         <Button
           disabled={isAnswering}
-          onClick={() => {
+          onClick={async () => {
             setIsAnswering(true);
-            aiResponse(message, openai, temperature).then((res) => {
-              setMessage(message + "\n" + res.replaceAll("\n", "") + "\n");
+            try {
+              console.log(message);
+              const response = await openai.createCompletion({
+                model: "text-curie-001",
+                prompt: message,
+                temperature: temperature / 100,
+                max_tokens: 256,
+                top_p: 1,
+                frequency_penalty: 0,
+                presence_penalty: 0,
+              });
+              if (response.data.choices[0].text) {
+                setUsedTokens(usedTokens + response.data.usage!.total_tokens);
+                setMessage(
+                  message +
+                    "\n" +
+                    response.data.choices[0].text.replaceAll("\n", "") +
+                    "\n"
+                );
+                setResponse("");
+                setIsAnswering(false);
+              } else {
+                setResponse("Error");
+                setIsAnswering(false);
+              }
+            } catch (e) {
+              console.log(e);
+              setResponse("Error: " + e);
               setIsAnswering(false);
-            });
+            }
           }}
         >
           Press this to AI😎
