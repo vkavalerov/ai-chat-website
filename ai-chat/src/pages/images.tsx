@@ -33,7 +33,7 @@ export default function Images(
         }}
       ></Box>
       <Text size="xl" weight={800} align="center">
-        Chat with AI (version 0.0.3)
+        Image Generator (version 0.0.1)
       </Text>
       <Box
         sx={{
@@ -49,9 +49,9 @@ export default function Images(
           sx={{
             width: "80%",
           }}
-          placeholder="Type your message here"
+          placeholder="Type your prompt here"
           disabled={isAnswering}
-          label="Message"
+          label="Image prompt"
           variant="filled"
           value={message}
           onChange={(e) => {
@@ -86,7 +86,7 @@ export default function Images(
             }
           }}
         >
-          Press this to AI😎
+          Generate Image
         </Button>
         <Text size="md" weight={700}>
           {response}
