@@ -41,8 +41,21 @@ export default function Chat(
           width: "100%",
         }}
       ></Box>
-      <Text size="md" weight={300} align="center">
+      <Text size="lg" weight={300} align="center">
         Temperature
+      </Text>
+      <Text
+        size="sm"
+        weight={200}
+        align="center"
+        sx={{
+          margin: "auto",
+          width: "40%",
+        }}
+      >
+        Controls randomness: Lowering results in less random completions. As the
+        temperature approaches zero, the model will become deterministic and
+        repetitive.
       </Text>
       <Slider
         value={temperature}
