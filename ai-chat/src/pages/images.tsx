@@ -9,11 +9,13 @@ import {
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { Configuration, OpenAIApi } from "openai";
 
 export default function Images(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
+  const router = useRouter();
   const [response, setResponse] = useState("");
   const [message, setMessage] = useState("");
   const [isAnswering, setIsAnswering] = useState(false);
@@ -103,6 +105,13 @@ export default function Images(
             }
           />
         </Center>
+        <Button
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          Go to Home Page
+        </Button>
       </Stack>
     </>
   );

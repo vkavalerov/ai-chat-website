@@ -10,11 +10,13 @@ import {
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { Configuration, OpenAIApi } from "openai";
 
 export default function Chat(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
+  const router = useRouter();
   const [response, setResponse] = useState("");
   const [message, setMessage] = useState("");
   const [temperature, setTemperature] = useState(50);
@@ -134,9 +136,13 @@ export default function Chat(
         >
           Press this to AI😎
         </Button>
-        <Text size="md" weight={700}>
-          {response}
-        </Text>
+        <Button
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          Go to Home Page
+        </Button>
       </Stack>
     </>
   );
