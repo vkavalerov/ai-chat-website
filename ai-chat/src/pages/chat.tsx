@@ -71,7 +71,7 @@ export default function Chat(
           setTemperature(value);
         }}
         sx={{
-          width: "50%",
+          width: "80%",
           margin: "auto",
         }}
         radius="md"
@@ -102,7 +102,9 @@ export default function Chat(
         justify="space-around"
         spacing="xl"
         sx={{
+          margin: "auto",
           width: "100%",
+          maxWidth: "700px",
         }}
       >
         {messages.map((message, index) => {
