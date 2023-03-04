@@ -69,9 +69,11 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
               </MediaQuery>
               <Group spacing="xs">
                 <Text size="xl">AI Playground</Text>
-                <Text size="xl" color={"dimmed"}>
-                  /
-                </Text>
+                {props.title ? (
+                  <Text size="xl" color={"dimmed"}>
+                    /
+                  </Text>
+                ) : null}
                 <Text size="xl">{props.title}</Text>
               </Group>
             </Group>
