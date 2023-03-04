@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
 import Message from "../components/Message";
+import AiAppLayout from "@/components/AiAppLayout";
 
 export default function Chat(
   props: InferGetStaticPropsType<typeof getStaticProps>
@@ -32,22 +33,7 @@ export default function Chat(
   const openai = new OpenAIApi(configuration);
 
   return (
-    <>
-      <Box
-        sx={{
-          height: "50px",
-          width: "100%",
-        }}
-      ></Box>
-      <Text size="xl" weight={800} align="center">
-        Chat with AI (version 0.0.3)
-      </Text>
-      <Box
-        sx={{
-          height: "30px",
-          width: "100%",
-        }}
-      ></Box>
+    <AiAppLayout title="Chat">
       <Text size="lg" weight={300} align="center">
         Temperature
       </Text>
@@ -57,7 +43,7 @@ export default function Chat(
         align="center"
         sx={{
           margin: "auto",
-          width: "40%",
+          width: "100%",
         }}
       >
         Controls randomness: Lowering results in less random completions. As the
@@ -218,7 +204,7 @@ export default function Chat(
           Go to Home Page
         </Button>
       </Stack>
-    </>
+    </AiAppLayout>
   );
 }
 
