@@ -15,10 +15,29 @@ export default function Home() {
         }}
       >
         <Text size="xl" weight={700}>
-          Hi, you are on AI test page.
+          Hi, You are on my AI Playground Website!
         </Text>
-        <Button onClick={() => router.push("/chat")}>Chat with AI</Button>
-        <Button onClick={() => router.push("/images")}>Images</Button>
+        <Text size="xl" weight={700}>
+          Have fun 😊
+        </Text>
+        <Button
+          size="md"
+          sx={{
+            width: "150px",
+          }}
+          onClick={() => router.push("/chat")}
+        >
+          Chat with AI
+        </Button>
+        <Button
+          size="md"
+          sx={{
+            width: "150px",
+          }}
+          onClick={() => router.push("/images")}
+        >
+          Images
+        </Button>
       </Stack>
     </>
   );
