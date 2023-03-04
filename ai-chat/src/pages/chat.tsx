@@ -24,6 +24,7 @@ export default function Chat(
   const [temperature, setTemperature] = useState(70);
   const [isAnswering, setIsAnswering] = useState(false);
   const [usedTokens, setUsedTokens] = useState(0);
+  let key = 0;
   const configuration = new Configuration({
     apiKey: props.openaiApiKey,
   });
@@ -106,7 +107,11 @@ export default function Chat(
         {messages.map((message, index) => {
           if (message.role === "system") {
             return (
-              <Message title="What do you want me to be?" type="system">
+              <Message
+                key={key++}
+                title="What do you want me to be?"
+                type="system"
+              >
                 <TextInput
                   disabled={isAnswering}
                   value={message.content}
@@ -121,6 +126,7 @@ export default function Chat(
           } else {
             return (
               <Message
+                key={key++}
                 title={message.role === "user" ? "You" : "AI"}
                 type={message.role}
                 text={message.content}
@@ -128,7 +134,7 @@ export default function Chat(
             );
           }
         })}
-        <Message title="You" type="user">
+        <Message key={key++} title="You" type="user">
           <TextInput
             disabled={isAnswering}
             value={message}
