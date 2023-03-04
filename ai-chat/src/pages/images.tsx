@@ -34,7 +34,16 @@ export default function Images(
       <Text size="lg" weight={300} align="center">
         Total money spend:{money / 100}$
       </Text>
-      <Stack justify="space-around" spacing="xl" align="center">
+      <Stack
+        justify="space-around"
+        spacing="xl"
+        align="center"
+        sx={{
+          margin: "auto",
+          width: "100%",
+          maxWidth: "700px",
+        }}
+      >
         <Textarea
           sx={{
             width: "80%",
