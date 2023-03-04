@@ -6,6 +6,7 @@ specifiers:
   '@mantine/core': ^5.10.5
   '@mantine/hooks': ^5.10.5
   '@mantine/next': ^5.10.5
+  '@tabler/icons-react': ^2.7.0
   '@types/node': 18.14.1
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -23,6 +24,7 @@ dependencies:
   '@mantine/core': 5.10.5_zrh3qbywp4klzxzvocxisz6a5a
   '@mantine/hooks': 5.10.5_react@18.2.0
   '@mantine/next': 5.10.5_pgglsq75fvw45j476lnzqmxl6q
+  '@tabler/icons-react': 2.7.0_react@18.2.0
   '@types/node': 18.14.1
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -622,6 +624,20 @@ packages:
     resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
     dependencies:
       tslib: 2.5.0
+    dev: false
+
+  /@tabler/icons-react/2.7.0_react@18.2.0:
+    resolution: {integrity: sha512-WV2ZwMUuZN9QcCX4RPg9+G+ycUgoItzOWVCCQYVWbYKV581fH8szM2KVaQHQhMbttL4JYtOgf4ColJIDwsIgdw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@tabler/icons': 2.7.0
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
+  /@tabler/icons/2.7.0:
+    resolution: {integrity: sha512-mSjUKhwN5fJHI9yITqFn9GXGnsJ4gBAyQDWyP4Ev5fk6hD78G7u6cHEF1KARr5FOOdiIKSZWCzNzUzyLhiNPrg==}
     dev: false
 
   /@types/json5/0.0.29:
