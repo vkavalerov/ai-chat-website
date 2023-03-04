@@ -1,4 +1,5 @@
 import { Container, Paper, Text } from "@mantine/core";
+import { useState } from "react";
 
 interface MessageProps {
   title: string;
@@ -49,9 +50,10 @@ export default function Message(props: MessageProps) {
           weight={400}
           sx={{
             wordBreak: "break-word",
+            whiteSpace: "pre-wrap",
           }}
         >
-          {props.text}
+          {props.text?.replaceAll("```", "")}
         </Text>
         {props.children}
       </Container>
