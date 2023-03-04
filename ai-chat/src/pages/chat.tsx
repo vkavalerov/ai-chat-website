@@ -111,7 +111,7 @@ export default function Chat(
               const response = await openai.createCompletion({
                 model: "gpt-3.5-turbo",
                 prompt: message,
-                temperature: temperature / 100,
+                //temperature: temperature / 100,
                 max_tokens: 4096,
               });
               if (response.data.choices[0].text) {
