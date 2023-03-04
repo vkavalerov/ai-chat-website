@@ -1,24 +1,26 @@
 import {
   Button,
   Text,
-  Textarea,
-  Container,
+  TextInput,
   Stack,
-  Center,
   Box,
   Slider,
+  Container,
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
+import Message from "../components/Message";
 
 export default function Chat(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const router = useRouter();
-  const [response, setResponse] = useState("");
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([
+    { role: "system", content: "You are a helpful assistant." },
+  ]);
   const [temperature, setTemperature] = useState(50);
   const [isAnswering, setIsAnswering] = useState(false);
   const [usedTokens, setUsedTokens] = useState(0);
@@ -84,60 +86,111 @@ export default function Chat(
           width: "100%",
         }}
       ></Box>
-      <Text size="lg" weight={300} align="center">
+      <Text
+        size="lg"
+        weight={300}
+        align="center"
+        sx={{
+          marginBottom: "30px",
+        }}
+      >
         Total tokens used: {usedTokens}, {(usedTokens / 1000) * 0.002}$
       </Text>
-      <Stack justify="space-around" spacing="xl" align="center">
-        <Textarea
-          sx={{
-            width: "80%",
-          }}
-          placeholder="Type your message here"
-          disabled={isAnswering}
-          label="Message"
-          variant="filled"
-          value={message}
-          minRows={20}
-          onChange={(e) => {
-            setMessage(e.currentTarget.value);
-          }}
-        />
+      <Stack
+        justify="space-around"
+        spacing="xl"
+        sx={{
+          width: "100%",
+        }}
+      >
+        {messages.map((message, index) => {
+          return (
+            <Message
+              // title may be You if message.role === "user", AI if message.role === "assistant", or the name of the assistant if message.role === "system"
+              title={
+                message.role === "user"
+                  ? "You"
+                  : message.role === "assistant"
+                  ? "AI"
+                  : "What do you want me to be?"
+              }
+              isAnswer={message.role === "assistant"} //message.role === "user" ? "You" : "AI"
+              text={message.content}
+            />
+          );
+        })}
+        <Message title="You" isAnswer={false}>
+          <TextInput
+            disabled={isAnswering}
+            value={message}
+            onChange={(e) => {
+              setMessage(e.currentTarget.value);
+            }}
+            sx={{
+              width: "100%",
+            }}
+            placeholder="Type your message here"
+          />
+        </Message>
         <Button
+          sx={{
+            width: "250px",
+            height: "50px",
+            margin: "auto",
+          }}
+          radius="md"
           disabled={isAnswering}
           onClick={async () => {
             setIsAnswering(true);
             try {
-              console.log(message);
-              const response = await openai.createCompletion({
+              const response = await openai.createChatCompletion({
                 model: "gpt-3.5-turbo",
-                prompt: message,
-                //temperature: temperature / 100,
-                max_tokens: 4096,
+                messages: [
+                  ...messages,
+                  {
+                    role: "user",
+                    content: message,
+                  },
+                ],
               });
-              if (response.data.choices[0].text) {
+              console.log(response);
+              if (response.data.choices[0]) {
                 setUsedTokens(usedTokens + response.data.usage!.total_tokens);
-                setMessage(
-                  message +
-                    "\n" +
-                    response.data.choices[0].text.replaceAll("\n", "") +
-                    "\n"
-                );
-                setResponse("");
+                setMessages([
+                  ...messages,
+                  {
+                    role: "user",
+                    content: message,
+                  },
+                  {
+                    role: "assistant",
+                    content: response.data.choices[0].message!.content,
+                  },
+                ]);
+                setMessage("");
                 setIsAnswering(false);
               } else {
-                setResponse("Error");
                 setIsAnswering(false);
+                setMessage("");
               }
             } catch (e) {
               console.log(e);
-              setResponse("Error: " + e);
               setIsAnswering(false);
+              setMessage("");
             }
           }}
         >
           Press this to AI😎
         </Button>
         <Button
+          sx={{
+            width: "160px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginBottom: "50px",
+          }}
+          radius="md"
+          variant="outline"
           onClick={() => {
             router.push("/");
           }}
