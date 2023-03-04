@@ -8,6 +8,7 @@ import {
   Footer,
   Burger,
   Group,
+  Stack,
 } from "@mantine/core";
 import Head from "next/head";
 import { useMantineTheme } from "@mantine/core";
@@ -45,7 +46,12 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
             hidden={!opened}
             width={{ sm: 200, lg: 300 }}
           >
-            <Text>Application navbar</Text>
+            <Stack>
+              <Navbar.Section grow mt="md">
+                {/* Links sections */}
+              </Navbar.Section>
+              <Navbar.Section>{/* Footer with user */}</Navbar.Section>
+            </Stack>
           </Navbar>
         }
         footer={
