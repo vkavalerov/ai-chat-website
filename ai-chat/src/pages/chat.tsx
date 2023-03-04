@@ -148,6 +148,7 @@ export default function Chat(
           />
         </Message>
         <Button
+          size="lg"
           sx={{
             width: "250px",
             height: "50px",
