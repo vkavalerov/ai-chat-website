@@ -37,7 +37,6 @@ export default function Message(props: MessageProps) {
             }
           : props.type === "system"
           ? {
-              // make background color of green
               backgroundColor: "#f0f0f0",
               width: "340px",
               marginLeft: "auto",
