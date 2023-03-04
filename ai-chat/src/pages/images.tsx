@@ -12,6 +12,7 @@ import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Configuration, OpenAIApi } from "openai";
+import AiAppLayout from "@/components/AiAppLayout";
 
 export default function Images(
   props: InferGetStaticPropsType<typeof getStaticProps>
@@ -29,7 +30,7 @@ export default function Images(
   const openai = new OpenAIApi(configuration);
 
   return (
-    <>
+    <AiAppLayout title="Images">
       <Box
         sx={{
           height: "50px",
@@ -133,7 +134,7 @@ export default function Images(
           Go to Home Page
         </Button>
       </Stack>
-    </>
+    </AiAppLayout>
   );
 }
 

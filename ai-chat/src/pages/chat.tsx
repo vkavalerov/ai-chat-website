@@ -61,6 +61,7 @@ export default function Chat(
         <Slider
           value={temperature}
           disabled={isAnswering}
+          color="cyan"
           onChange={(value) => {
             setTemperature(value);
           }}
@@ -111,6 +112,7 @@ export default function Chat(
                 type="system"
               >
                 <TextInput
+                  color="cyan"
                   disabled={isAnswering}
                   value={message.content}
                   onChange={(e) => {
@@ -134,6 +136,7 @@ export default function Chat(
         })}
         <Message key={key++} title="You" type="user">
           <Textarea
+            color="cyan"
             disabled={isAnswering}
             value={message}
             onChange={(e) => {
@@ -152,6 +155,7 @@ export default function Chat(
             height: "50px",
             margin: "auto",
           }}
+          color="cyan"
           radius="md"
           disabled={isAnswering}
           onClick={async () => {
@@ -204,6 +208,7 @@ export default function Chat(
             marginRight: "auto",
             marginBottom: "50px",
           }}
+          color="cyan"
           radius="md"
           variant="outline"
           onClick={() => {

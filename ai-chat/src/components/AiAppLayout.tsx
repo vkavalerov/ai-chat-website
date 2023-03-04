@@ -9,10 +9,17 @@ import {
   Burger,
   Group,
   Stack,
+  Button,
 } from "@mantine/core";
 import Head from "next/head";
 import { useMantineTheme } from "@mantine/core";
 import { useState } from "react";
+import {
+  IconMessageCircle,
+  IconPhoto,
+  IconInfoCircle,
+} from "@tabler/icons-react";
+import { useRouter } from "next/router";
 
 interface AiAppLayoutProps {
   children: React.ReactNode;
@@ -22,6 +29,7 @@ interface AiAppLayoutProps {
 export default function AiAppLayout(props: AiAppLayoutProps) {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+  const router = useRouter();
   const today = new Date();
   return (
     <>
@@ -46,12 +54,95 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
             hidden={!opened}
             width={{ sm: 200, lg: 300 }}
           >
-            <Stack>
-              <Navbar.Section grow mt="md">
-                {/* Links sections */}
-              </Navbar.Section>
-              <Navbar.Section>{/* Footer with user */}</Navbar.Section>
-            </Stack>
+            <Navbar.Section grow>
+              <Stack spacing="md">
+                <Button
+                  leftIcon={
+                    <IconMessageCircle
+                      style={{
+                        color: router.pathname === "/chat" ? "#58B5CC" : "#000",
+                      }}
+                    />
+                  }
+                  size="md"
+                  radius="md"
+                  variant="default"
+                  onClick={() => {
+                    setOpened(false);
+                    router.push("/chat");
+                  }}
+                >
+                  <Text
+                    sx={{
+                      color: router.pathname === "/chat" ? "#58B5CC" : "#000",
+                    }}
+                  >
+                    Chat
+                  </Text>
+                </Button>
+                <Button
+                  leftIcon={
+                    <IconPhoto
+                      style={{
+                        color:
+                          router.pathname === "/images" ? "#58B5CC" : "#000",
+                      }}
+                    />
+                  }
+                  size="md"
+                  radius="md"
+                  variant="default"
+                  onClick={() => {
+                    setOpened(false);
+                    router.push("/images");
+                  }}
+                >
+                  <Text
+                    sx={{
+                      color: router.pathname === "/images" ? "#58B5CC" : "#000",
+                    }}
+                  >
+                    Images
+                  </Text>
+                </Button>
+                <Button
+                  leftIcon={
+                    <IconInfoCircle
+                      style={{
+                        color: router.pathname === "/" ? "#58B5CC" : "#000",
+                      }}
+                    />
+                  }
+                  size="md"
+                  radius="md"
+                  variant="default"
+                  onClick={() => {
+                    setOpened(false);
+                    router.push("/");
+                  }}
+                >
+                  <Text
+                    sx={{
+                      color: router.pathname === "/" ? "#58B5CC" : "#000",
+                    }}
+                  >
+                    About
+                  </Text>
+                </Button>
+              </Stack>
+            </Navbar.Section>
+            <Navbar.Section>
+              <Button
+                sx={{
+                  width: "100%",
+                }}
+                size="md"
+                radius="md"
+                variant="default"
+              >
+                Your Account
+              </Button>
+            </Navbar.Section>
           </Navbar>
         }
         footer={
