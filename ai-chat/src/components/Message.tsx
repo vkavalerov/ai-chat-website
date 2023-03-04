@@ -44,7 +44,13 @@ export default function Message(props: MessageProps) {
         <Text size="lg" weight={800}>
           {props.title}
         </Text>
-        <Text size="sm" weight={400}>
+        <Text
+          size="sm"
+          weight={400}
+          sx={{
+            wordBreak: "break-word",
+          }}
+        >
           {props.text}
         </Text>
         {props.children}
