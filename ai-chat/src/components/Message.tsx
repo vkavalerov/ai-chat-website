@@ -23,14 +23,14 @@ export default function Message(props: MessageProps) {
       sx={
         props.type === "assistant"
           ? {
-              backgroundColor: "#e6f7ff",
+              backgroundColor: "#def0f5",
               width: "90%",
               marginRight: "auto",
               marginLeft: "5%",
             }
           : props.type === "user"
           ? {
-              width: "280px",
+              width: "60%",
               textAlign: "right",
               marginLeft: "auto",
               marginRight: "5%",

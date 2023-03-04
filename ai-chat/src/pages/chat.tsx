@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
 import Message from "../components/Message";
+import AiAppLayout from "@/components/AiAppLayout";
 
 export default function Chat(
   props: InferGetStaticPropsType<typeof getStaticProps>
@@ -32,72 +33,67 @@ export default function Chat(
   const openai = new OpenAIApi(configuration);
 
   return (
-    <>
-      <Box
-        sx={{
-          height: "50px",
-          width: "100%",
-        }}
-      ></Box>
-      <Text size="xl" weight={800} align="center">
-        Chat with AI (version 0.0.3)
-      </Text>
-      <Box
-        sx={{
-          height: "30px",
-          width: "100%",
-        }}
-      ></Box>
-      <Text size="lg" weight={300} align="center">
-        Temperature
-      </Text>
-      <Text
-        size="sm"
-        weight={200}
-        align="center"
+    <AiAppLayout title="Chat">
+      <Stack
+        spacing="xs"
         sx={{
           margin: "auto",
-          width: "40%",
-        }}
-      >
-        Controls randomness: Lowering results in less random completions. As the
-        temperature approaches zero, the model will become deterministic and
-        repetitive.
-      </Text>
-      <Slider
-        value={temperature}
-        disabled={isAnswering}
-        onChange={(value) => {
-          setTemperature(value);
-        }}
-        sx={{
-          width: "80%",
-          margin: "auto",
-        }}
-        radius="md"
-        marks={[
-          { value: 20, label: "20%" },
-          { value: 40, label: "40%" },
-          { value: 60, label: "60%" },
-          { value: 80, label: "80%" },
-        ]}
-      />
-      <Box
-        sx={{
-          height: "20px",
           width: "100%",
-        }}
-      ></Box>
-      <Text
-        size="lg"
-        weight={300}
-        align="center"
-        sx={{
-          marginBottom: "30px",
+          maxWidth: "700px",
         }}
       >
-        Total tokens used: {usedTokens}, {(usedTokens / 1000) * 0.002}$
-      </Text>
+        <Text size="lg" weight={300} align="center">
+          Temperature
+        </Text>
+        <Text
+          size="sm"
+          weight={200}
+          align="center"
+          sx={{
+            margin: "auto",
+            width: "100%",
+          }}
+        >
+          Controls randomness: Lowering results in less random completions. As
+          the temperature approaches zero, the model will become deterministic
+          and repetitive.
+        </Text>
+        <Slider
+          value={temperature}
+          disabled={isAnswering}
+          color="cyan"
+          onChange={(value) => {
+            setTemperature(value);
+          }}
+          sx={{
+            width: "100%",
+            margin: "auto",
+          }}
+          radius="md"
+          marks={[
+            { value: 20, label: "20%" },
+            { value: 40, label: "40%" },
+            { value: 60, label: "60%" },
+            { value: 80, label: "80%" },
+          ]}
+        />
+        <Box
+          sx={{
+            height: "20px",
+            width: "100%",
+          }}
+        ></Box>
+        <Text
+          size="lg"
+          weight={300}
+          align="center"
+          sx={{
+            marginBottom: "30px",
+          }}
+        >
+          Total tokens used: {usedTokens}, {(usedTokens / 1000) * 0.002}$
+        </Text>
+      </Stack>
       <Stack
         justify="space-around"
         spacing="xl"
@@ -116,6 +112,7 @@ export default function Chat(
                 type="system"
               >
                 <TextInput
+                  color="cyan"
                   disabled={isAnswering}
                   value={message.content}
                   onChange={(e) => {
@@ -139,6 +136,7 @@ export default function Chat(
         })}
         <Message key={key++} title="You" type="user">
           <Textarea
+            color="cyan"
             disabled={isAnswering}
             value={message}
             onChange={(e) => {
@@ -157,6 +155,7 @@ export default function Chat(
             height: "50px",
             margin: "auto",
           }}
+          color="cyan"
           radius="md"
           disabled={isAnswering}
           onClick={async () => {
@@ -202,23 +201,8 @@ export default function Chat(
         >
           Answer me!🤓
         </Button>
-        <Button
-          sx={{
-            width: "160px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginBottom: "50px",
-          }}
-          radius="md"
-          variant="outline"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          Go to Home Page
-        </Button>
       </Stack>
-    </>
+    </AiAppLayout>
   );
 }
 

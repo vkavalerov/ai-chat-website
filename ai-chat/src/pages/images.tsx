@@ -12,6 +12,7 @@ import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Configuration, OpenAIApi } from "openai";
+import AiAppLayout from "@/components/AiAppLayout";
 
 export default function Images(
   props: InferGetStaticPropsType<typeof getStaticProps>
@@ -29,30 +30,25 @@ export default function Images(
   const openai = new OpenAIApi(configuration);
 
   return (
-    <>
-      <Box
-        sx={{
-          height: "50px",
-          width: "100%",
-        }}
-      ></Box>
-      <Text size="xl" weight={800} align="center">
-        Image Generator (version 0.0.1)
-      </Text>
-      <Box
-        sx={{
-          height: "50px",
-          width: "100%",
-        }}
-      ></Box>
+    <AiAppLayout title="Images">
       <Text size="lg" weight={300} align="center">
         Total money spend:{money / 100}$
       </Text>
-      <Stack justify="space-around" spacing="xl" align="center">
+      <Stack
+        justify="space-around"
+        spacing="xl"
+        align="center"
+        sx={{
+          margin: "auto",
+          width: "100%",
+          maxWidth: "700px",
+        }}
+      >
         <Textarea
           sx={{
             width: "80%",
           }}
+          radius="md"
           placeholder="Type your prompt here"
           disabled={isAnswering}
           label="Image prompt"
@@ -66,6 +62,7 @@ export default function Images(
           sx={{
             width: "80%",
           }}
+          radius="md"
           placeholder="Type password here"
           disabled={isAnswering}
           label="Password"
@@ -76,6 +73,8 @@ export default function Images(
           }}
         />
         <Button
+          color="cyan"
+          radius="md"
           disabled={isAnswering}
           onClick={async () => {
             if (password === props.imagePassword) {
@@ -125,15 +124,8 @@ export default function Images(
             }
           />
         </Center>
-        <Button
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          Go to Home Page
-        </Button>
       </Stack>
-    </>
+    </AiAppLayout>
   );
 }
 
