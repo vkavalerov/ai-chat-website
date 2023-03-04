@@ -4,7 +4,7 @@ interface MessageProps {
   title: string;
   text?: string;
   children?: React.ReactNode;
-  isAnswer: boolean;
+  type: string;
 }
 export default function Message(props: MessageProps) {
   return (
@@ -13,19 +13,30 @@ export default function Message(props: MessageProps) {
       p="md"
       radius="md"
       sx={
-        props.isAnswer
+        props.type === "assistant"
           ? {
               backgroundColor: "#e6f7ff",
               width: "50%",
               marginRight: "auto",
               marginLeft: "20%",
             }
-          : {
-              backgroundColor: "#f0f0f0",
+          : props.type === "user"
+          ? {
               width: "50%",
+              textAlign: "right",
               marginLeft: "auto",
               marginRight: "20%",
             }
+          : props.type === "system"
+          ? {
+              // make background color of green
+              backgroundColor: "#f0f0f0",
+              width: "50%",
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginBottom: "10px",
+            }
+          : {}
       }
     >
       <Container>

@@ -21,7 +21,7 @@ export default function Chat(
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([
     { role: "system", content: "You are a helpful assistant." },
   ]);
-  const [temperature, setTemperature] = useState(50);
+  const [temperature, setTemperature] = useState(70);
   const [isAnswering, setIsAnswering] = useState(false);
   const [usedTokens, setUsedTokens] = useState(0);
   const configuration = new Configuration({
@@ -104,22 +104,31 @@ export default function Chat(
         }}
       >
         {messages.map((message, index) => {
-          return (
-            <Message
-              // title may be You if message.role === "user", AI if message.role === "assistant", or the name of the assistant if message.role === "system"
-              title={
-                message.role === "user"
-                  ? "You"
-                  : message.role === "assistant"
-                  ? "AI"
-                  : "What do you want me to be?"
-              }
-              isAnswer={message.role === "assistant"} //message.role === "user" ? "You" : "AI"
-              text={message.content}
-            />
-          );
+          if (message.role === "system") {
+            return (
+              <Message title="What do you want me to be?" type="system">
+                <TextInput
+                  disabled={isAnswering}
+                  value={message.content}
+                  onChange={(e) => {
+                    const newMessages = [...messages];
+                    newMessages[index].content = e.currentTarget.value;
+                    setMessages(newMessages);
+                  }}
+                />
+              </Message>
+            );
+          } else {
+            return (
+              <Message
+                title={message.role === "user" ? "You" : "AI"}
+                type={message.role}
+                text={message.content}
+              />
+            );
+          }
         })}
-        <Message title="You" isAnswer={false}>
+        <Message title="You" type="user">
           <TextInput
             disabled={isAnswering}
             value={message}
@@ -143,6 +152,7 @@ export default function Chat(
           onClick={async () => {
             setIsAnswering(true);
             try {
+              console.log(messages);
               const response = await openai.createChatCompletion({
                 model: "gpt-3.5-turbo",
                 messages: [
