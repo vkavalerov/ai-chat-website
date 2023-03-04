@@ -22,6 +22,7 @@ export default function Home() {
         </Text>
         <Button
           size="md"
+          radius="md"
           sx={{
             width: "150px",
           }}
@@ -31,6 +32,7 @@ export default function Home() {
         </Button>
         <Button
           size="md"
+          radius="md"
           sx={{
             width: "150px",
           }}
