@@ -12,6 +12,7 @@ export default function Message(props: MessageProps) {
       shadow="xl"
       p="md"
       radius="md"
+      withBorder
       sx={
         props.type === "assistant"
           ? {
