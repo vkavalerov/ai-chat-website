@@ -1,4 +1,10 @@
-import { Container, Paper, Text } from "@mantine/core";
+import {
+  Container,
+  Paper,
+  Text,
+  TypographyStylesProvider,
+  Code,
+} from "@mantine/core";
 import { useState } from "react";
 
 interface MessageProps {
@@ -53,10 +59,33 @@ export default function Message(props: MessageProps) {
             whiteSpace: "pre-wrap",
           }}
         >
-          {props.text?.replaceAll("```", "")}
+          <TypographyStylesProvider>
+            {props.text !== undefined
+              ? highlightTextWithinBackticks(props.text!)
+              : ""}
+          </TypographyStylesProvider>
         </Text>
         {props.children}
       </Container>
     </Paper>
   );
+}
+
+function highlightTextWithinBackticks(input: string): React.ReactNode {
+  const regex = /```([^`]*)```/g;
+  const output = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(input)) !== null) {
+    output.push(input.substring(lastIndex, match.index));
+    output.push(<Code block>{match[1]}</Code>);
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < input.length) {
+    output.push(input.substring(lastIndex));
+  }
+
+  return output;
 }
