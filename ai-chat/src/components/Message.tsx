@@ -24,7 +24,7 @@ export default function Message(props: MessageProps) {
         props.type === "assistant"
           ? {
               backgroundColor: "#e6f7ff",
-              width: "500px",
+              width: "90%",
               marginRight: "auto",
               marginLeft: "5%",
             }
