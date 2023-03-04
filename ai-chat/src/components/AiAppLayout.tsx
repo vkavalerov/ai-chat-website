@@ -158,7 +158,7 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
         footer={
           <Footer height={60} p="md">
             <Center>
-              <Text>Vladimir Kavalerov, {today.getFullYear()} &copy;</Text>
+              <Text>Vladimir Kavalerov {today.getFullYear()} &copy;</Text>
             </Center>
           </Footer>
         }
