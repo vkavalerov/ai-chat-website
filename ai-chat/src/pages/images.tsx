@@ -80,7 +80,6 @@ export default function Images(
             if (password === props.imagePassword) {
               setIsAnswering(true);
               try {
-                console.log(message);
                 const response = await openai.createImage({
                   prompt: message,
                   n: 1,
@@ -96,7 +95,6 @@ export default function Images(
                   setIsAnswering(false);
                 }
               } catch (e) {
-                console.log(e);
                 setResponse("Error: " + e);
                 setIsAnswering(false);
               }

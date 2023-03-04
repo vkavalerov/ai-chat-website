@@ -161,7 +161,6 @@ export default function Chat(
           onClick={async () => {
             setIsAnswering(true);
             try {
-              console.log(messages);
               const response = await openai.createChatCompletion({
                 model: "gpt-3.5-turbo",
                 messages: [
@@ -172,7 +171,6 @@ export default function Chat(
                   },
                 ],
               });
-              console.log(response);
               if (response.data.choices[0]) {
                 setUsedTokens(usedTokens + response.data.usage!.total_tokens);
                 setMessages([
@@ -193,7 +191,6 @@ export default function Chat(
                 setMessage("");
               }
             } catch (e) {
-              console.log(e);
               setIsAnswering(false);
               setMessage("");
             }
