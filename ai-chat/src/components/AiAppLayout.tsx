@@ -139,8 +139,18 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
                 size="md"
                 radius="md"
                 variant="default"
+                onClick={() => {
+                  setOpened(false);
+                  router.push("/account");
+                }}
               >
-                Your Account
+                <Text
+                  sx={{
+                    color: router.pathname === "/account" ? "#58B5CC" : "#000",
+                  }}
+                >
+                  Your Account
+                </Text>
               </Button>
             </Navbar.Section>
           </Navbar>
