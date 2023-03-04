@@ -21,20 +21,20 @@ export default function Home() {
           Have fun 😊
         </Text>
         <Button
-          size="md"
+          size="lg"
           radius="md"
           sx={{
-            width: "150px",
+            width: "180px",
           }}
           onClick={() => router.push("/chat")}
         >
           Chat with AI
         </Button>
         <Button
-          size="md"
+          size="lg"
           radius="md"
           sx={{
-            width: "150px",
+            width: "180px",
           }}
           onClick={() => router.push("/images")}
         >
