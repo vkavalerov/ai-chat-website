@@ -31,21 +31,6 @@ export default function Images(
 
   return (
     <AiAppLayout title="Images">
-      <Box
-        sx={{
-          height: "50px",
-          width: "100%",
-        }}
-      ></Box>
-      <Text size="xl" weight={800} align="center">
-        Image Generator (version 0.0.1)
-      </Text>
-      <Box
-        sx={{
-          height: "50px",
-          width: "100%",
-        }}
-      ></Box>
       <Text size="lg" weight={300} align="center">
         Total money spend:{money / 100}$
       </Text>
@@ -54,6 +39,7 @@ export default function Images(
           sx={{
             width: "80%",
           }}
+          radius="md"
           placeholder="Type your prompt here"
           disabled={isAnswering}
           label="Image prompt"
@@ -67,6 +53,7 @@ export default function Images(
           sx={{
             width: "80%",
           }}
+          radius="md"
           placeholder="Type password here"
           disabled={isAnswering}
           label="Password"
@@ -77,6 +64,8 @@ export default function Images(
           }}
         />
         <Button
+          color="cyan"
+          radius="md"
           disabled={isAnswering}
           onClick={async () => {
             if (password === props.imagePassword) {
@@ -126,13 +115,6 @@ export default function Images(
             }
           />
         </Center>
-        <Button
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          Go to Home Page
-        </Button>
       </Stack>
     </AiAppLayout>
   );

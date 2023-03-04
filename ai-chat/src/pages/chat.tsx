@@ -201,22 +201,6 @@ export default function Chat(
         >
           Answer me!🤓
         </Button>
-        <Button
-          sx={{
-            width: "160px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginBottom: "50px",
-          }}
-          color="cyan"
-          radius="md"
-          variant="outline"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          Go to Home Page
-        </Button>
       </Stack>
     </AiAppLayout>
   );

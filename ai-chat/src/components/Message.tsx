@@ -30,7 +30,7 @@ export default function Message(props: MessageProps) {
             }
           : props.type === "user"
           ? {
-              width: "280px",
+              width: "60%",
               textAlign: "right",
               marginLeft: "auto",
               marginRight: "5%",
