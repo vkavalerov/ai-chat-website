@@ -17,13 +17,13 @@ export default function Message(props: MessageProps) {
         props.type === "assistant"
           ? {
               backgroundColor: "#e6f7ff",
-              width: "350px",
+              width: "320px",
               marginRight: "auto",
               marginLeft: "5%",
             }
           : props.type === "user"
           ? {
-              width: "350px",
+              width: "280px",
               textAlign: "right",
               marginLeft: "auto",
               marginRight: "5%",
@@ -41,10 +41,12 @@ export default function Message(props: MessageProps) {
       }
     >
       <Container>
-        <Text size="xl" weight={800}>
+        <Text size="lg" weight={800}>
           {props.title}
         </Text>
-        <Text>{props.text}</Text>
+        <Text size="sm" weight={400}>
+          {props.text}
+        </Text>
         {props.children}
       </Container>
     </Paper>
