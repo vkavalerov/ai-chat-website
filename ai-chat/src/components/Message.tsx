@@ -17,22 +17,22 @@ export default function Message(props: MessageProps) {
         props.type === "assistant"
           ? {
               backgroundColor: "#e6f7ff",
-              width: "50%",
+              width: "400px",
               marginRight: "auto",
-              marginLeft: "20%",
+              marginLeft: "5%",
             }
           : props.type === "user"
           ? {
-              width: "50%",
+              width: "400px",
               textAlign: "right",
               marginLeft: "auto",
-              marginRight: "20%",
+              marginRight: "5%",
             }
           : props.type === "system"
           ? {
               // make background color of green
               backgroundColor: "#f0f0f0",
-              width: "50%",
+              width: "500px",
               marginLeft: "auto",
               marginRight: "auto",
               marginBottom: "10px",

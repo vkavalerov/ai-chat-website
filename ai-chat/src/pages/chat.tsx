@@ -2,6 +2,7 @@ import {
   Button,
   Text,
   TextInput,
+  Textarea,
   Stack,
   Box,
   Slider,
@@ -135,7 +136,7 @@ export default function Chat(
           }
         })}
         <Message key={key++} title="You" type="user">
-          <TextInput
+          <Textarea
             disabled={isAnswering}
             value={message}
             onChange={(e) => {
