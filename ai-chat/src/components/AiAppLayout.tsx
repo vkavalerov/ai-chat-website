@@ -57,7 +57,7 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
         }
         header={
           <Header height={60}>
-            <Group sx={{ height: "100%" }} px={16}>
+            <Group sx={{ height: "100%" }} px={30}>
               <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                 <Burger
                   opened={opened}
@@ -67,16 +67,13 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
                   mr="xl"
                 />
               </MediaQuery>
-              <Text size="xl">AI Playground</Text>
-              <Text
-                size="xl"
-                sx={{
-                  marginLeft: "auto",
-                  marginRight: "40%",
-                }}
-              >
-                {props.title}
-              </Text>
+              <Group spacing="xs">
+                <Text size="xl">AI Playground</Text>
+                <Text size="xl" color={"dimmed"}>
+                  /
+                </Text>
+                <Text size="xl">{props.title}</Text>
+              </Group>
             </Group>
           </Header>
         }
