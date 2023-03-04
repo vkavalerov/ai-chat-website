@@ -109,10 +109,10 @@ export default function Chat(
             try {
               console.log(message);
               const response = await openai.createCompletion({
-                model: "text-curie-001",
+                model: "gpt-3.5-turbo",
                 prompt: message,
                 temperature: temperature / 100,
-                max_tokens: 2000,
+                max_tokens: 4096,
               });
               if (response.data.choices[0].text) {
                 setUsedTokens(usedTokens + response.data.usage!.total_tokens);
