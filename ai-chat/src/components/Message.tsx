@@ -60,7 +60,7 @@ export default function Message(props: MessageProps) {
         >
           <TypographyStylesProvider>
             {props.text !== undefined
-              ? highlightTextWithinBackticks(props.text!)
+              ? highlightTextWithinTripleBackticks(props.text!)
               : ""}
           </TypographyStylesProvider>
         </Text>
@@ -70,15 +70,21 @@ export default function Message(props: MessageProps) {
   );
 }
 
-function highlightTextWithinBackticks(input: string): React.ReactNode {
-  const regex = /```([^`]*)```/g;
+function highlightTextWithinTripleBackticks(input: string): React.ReactNode {
+  const regex = /```(.+?)```|`(.+?)`/gs;
   const output = [];
   let lastIndex = 0;
   let match;
 
   while ((match = regex.exec(input)) !== null) {
     output.push(input.substring(lastIndex, match.index));
-    output.push(<Code block>{match[1]}</Code>);
+
+    if (match[1]) {
+      output.push(<Code block>{match[1]}</Code>);
+    } else {
+      output.push(<Code>{match[2]}</Code>);
+    }
+
     lastIndex = regex.lastIndex;
   }
 
