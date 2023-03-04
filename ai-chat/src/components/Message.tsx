@@ -5,7 +5,6 @@ import {
   TypographyStylesProvider,
   Code,
 } from "@mantine/core";
-import { useState } from "react";
 
 interface MessageProps {
   title: string;
@@ -36,7 +35,7 @@ export default function Message(props: MessageProps) {
             }
           : props.type === "system"
           ? {
-              backgroundColor: "#f0f0f0",
+              backgroundColor: "#def0f5",
               width: "340px",
               marginLeft: "auto",
               marginRight: "auto",
