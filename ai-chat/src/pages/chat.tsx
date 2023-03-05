@@ -157,7 +157,7 @@ export default function Chat(
           }}
           color="cyan"
           radius="md"
-          disabled={isAnswering}
+          loading={isAnswering}
           onClick={async () => {
             setIsAnswering(true);
             try {
