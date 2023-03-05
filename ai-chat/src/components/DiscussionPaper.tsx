@@ -1,9 +1,10 @@
-import { Paper, Text, Button } from "@mantine/core";
+import { Paper, Text, Button, Group } from "@mantine/core";
 import { useRouter } from "next/router";
 
 interface DiscussionProps {
   title: string;
   id: number;
+  created_at: string;
 }
 
 export default function DiscussionPaper(props: DiscussionProps) {
@@ -18,26 +19,31 @@ export default function DiscussionPaper(props: DiscussionProps) {
         width: "90%",
       }}
     >
-      <Text size="xl" weight={600}>
+      <Text size="lg" weight={300} truncate>
         {props.title}
       </Text>
-      <Button
-        size="lg"
-        sx={{
-          width: "250px",
-          height: "50px",
-        }}
-        color="cyan"
-        radius="md"
-        onClick={() => {
-          router.push({
-            pathname: "/chat",
-            query: { id: props.id },
-          });
-        }}
-      >
-        Open
-      </Button>
+      <Group position="apart">
+        <Button
+          size="md"
+          sx={{
+            width: "100px",
+            height: "30px",
+          }}
+          color="cyan"
+          radius="md"
+          onClick={() => {
+            router.push({
+              pathname: "/chat",
+              query: { id: props.id },
+            });
+          }}
+        >
+          Open
+        </Button>
+        <Text size="md" weight={300}>
+          Created at {props.created_at}
+        </Text>
+      </Group>
     </Paper>
   );
 }

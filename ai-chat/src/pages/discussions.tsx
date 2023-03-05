@@ -1,4 +1,4 @@
-import { Stack } from "@mantine/core";
+import { Button, Paper, Stack } from "@mantine/core";
 import { useRouter } from "next/router";
 import AiAppLayout from "../components/AiAppLayout";
 import DiscussionPaper from "../components/DiscussionPaper";
@@ -8,6 +8,7 @@ import { Key, useEffect, useState } from "react";
 interface DiscussionProps {
   id: number;
   title: string;
+  created_at: string;
 }
 
 export default function Discussions() {
@@ -29,6 +30,7 @@ export default function Discussions() {
           discussions.push({
             id: discussion.id,
             title: discussion.discussion.data[1].content,
+            created_at: discussion.created_at_simple,
           });
         }
         return discussions;
@@ -51,11 +53,28 @@ export default function Discussions() {
           maxWidth: "700px",
         }}
       >
+        <Button
+          size="lg"
+          sx={{
+            width: "250px",
+            height: "50px",
+          }}
+          color="cyan"
+          radius="md"
+          onClick={() => {
+            router.push({
+              pathname: "/chat",
+            });
+          }}
+        >
+          New Discussion
+        </Button>
         {discussions?.map((discussion) => (
           <DiscussionPaper
             key={discussion.id}
             id={discussion.id}
             title={discussion.title}
+            created_at={discussion.created_at}
           />
         ))}
       </Stack>
