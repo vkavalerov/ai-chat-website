@@ -21,7 +21,8 @@ export default function Discussions() {
         const loadedDiscussions = await supabaseClient
           .from("discussions")
           .select("*")
-          .eq("user_id", user!.id);
+          .eq("user_id", user!.id)
+          .order("created_at", { ascending: false });
         if (loadedDiscussions.error) throw loadedDiscussions.error;
         const discussions = [];
         for (const discussion of loadedDiscussions.data) {
@@ -41,7 +42,7 @@ export default function Discussions() {
     <AiAppLayout title="Discussions">
       <Stack
         justify="center"
-        spacing="xl"
+        spacing="xs"
         align="center"
         sx={{
           height: "100%",
