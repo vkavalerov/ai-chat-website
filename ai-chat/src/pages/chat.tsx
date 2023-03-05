@@ -14,6 +14,8 @@ import { useRouter } from "next/router";
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
 import Message from "../components/Message";
 import AiAppLayout from "@/components/AiAppLayout";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { Database } from "../lib/database.types";
 
 export default function Chat(
   props: InferGetStaticPropsType<typeof getStaticProps>
@@ -26,11 +28,14 @@ export default function Chat(
   const [temperature, setTemperature] = useState(70);
   const [isAnswering, setIsAnswering] = useState(false);
   const [usedTokens, setUsedTokens] = useState(0);
+  const [discussionId, setdiscussionId] = useState<number>();
   let key = 0;
   const configuration = new Configuration({
     apiKey: props.openaiApiKey,
   });
   const openai = new OpenAIApi(configuration);
+  const user = useUser();
+  const supabaseClient = useSupabaseClient<Database>();
 
   return (
     <AiAppLayout title="Chat">
@@ -173,6 +178,54 @@ export default function Chat(
               });
               if (response.data.choices[0]) {
                 setUsedTokens(usedTokens + response.data.usage!.total_tokens);
+                if (!discussionId) {
+                  const supabaseResponse = await supabaseClient
+                    .from("discussions")
+                    .insert({
+                      user_id: user!.id,
+                      discussion: {
+                        data: [
+                          ...messages,
+                          {
+                            role: "user",
+                            content: message,
+                          },
+                          {
+                            role: "assistant",
+                            content: response.data.choices[0].message!.content,
+                          },
+                        ],
+                      },
+                    })
+                    .select("id");
+                  if (supabaseResponse.error) {
+                    throw new Error("Error while saving discussion");
+                  }
+                  setdiscussionId(supabaseResponse.data![0].id);
+                } else {
+                  const supabaseResponse = await supabaseClient
+                    .from("discussions")
+                    .update({
+                      discussion: {
+                        data: [
+                          ...messages,
+                          {
+                            role: "user",
+                            content: message,
+                          },
+                          {
+                            role: "assistant",
+                            content: response.data.choices[0].message!.content,
+                          },
+                        ],
+                      },
+                    })
+                    .eq("id", discussionId);
+                  if (supabaseResponse.error) {
+                    throw new Error("Error while saving discussion");
+                  }
+                }
+
                 setMessages([
                   ...messages,
                   {
