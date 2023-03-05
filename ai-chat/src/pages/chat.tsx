@@ -9,33 +9,58 @@ import {
   Container,
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Router, useRouter } from "next/router";
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
 import Message from "../components/Message";
 import AiAppLayout from "@/components/AiAppLayout";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Database } from "../lib/database.types";
 
-export default function Chat(
-  props: InferGetStaticPropsType<typeof getStaticProps>
-) {
+const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+
+export default function Chat() {
   const router = useRouter();
-  const [message, setMessage] = useState("");
+  const supabaseClient = useSupabaseClient<Database>();
+  const [discussionId, setdiscussionId] = useState("");
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([
     { role: "system", content: "You are a helpful assistant." },
   ]);
+  useEffect(() => {
+    if (user && router.query.id) {
+      setdiscussionId(router.query.id as string);
+      const fetchMessages = async () => {
+        const response = await supabaseClient
+          .from("discussions")
+          .select("*")
+          .eq("id", router.query.id);
+        if (response.error) throw response.error;
+        const outputDiscussion: ChatCompletionRequestMessage[] = [];
+        console.log(response.data[0].discussion.data);
+        const discussions = response.data[0].discussion.data;
+        for (const discussion of discussions) {
+          outputDiscussion.push({
+            role: discussion.role,
+            content: discussion.content,
+          });
+        }
+        return outputDiscussion;
+      };
+      fetchMessages().then((messages) => {
+        setMessages(messages);
+      });
+    }
+  }, [supabaseClient]);
+  const [message, setMessage] = useState("");
   const [temperature, setTemperature] = useState(70);
   const [isAnswering, setIsAnswering] = useState(false);
   const [usedTokens, setUsedTokens] = useState(0);
-  const [discussionId, setdiscussionId] = useState<number>();
   let key = 0;
   const configuration = new Configuration({
-    apiKey: props.openaiApiKey,
+    apiKey: OPENAI_API_KEY,
   });
   const openai = new OpenAIApi(configuration);
   const user = useUser();
-  const supabaseClient = useSupabaseClient<Database>();
 
   return (
     <AiAppLayout title="Chat">
@@ -254,12 +279,4 @@ export default function Chat(
       </Stack>
     </AiAppLayout>
   );
-}
-
-export async function getStaticProps() {
-  return {
-    props: {
-      openaiApiKey: process.env.OPENAI_API_KEY,
-    },
-  };
 }
