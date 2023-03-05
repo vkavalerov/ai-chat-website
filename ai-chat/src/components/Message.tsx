@@ -45,7 +45,7 @@ export default function Message(props: MessageProps) {
       }
     >
       <Container>
-        <Text size="lg" weight={800}>
+        <Text size="xl" weight={400}>
           {props.title}
         </Text>
         <Text
