@@ -6,7 +6,7 @@ import {
   Box,
   Image,
   Center,
-  TextInput,
+  PasswordInput,
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
@@ -58,7 +58,7 @@ export default function Images(
             setMessage(e.currentTarget.value);
           }}
         />
-        <TextInput
+        <PasswordInput
           sx={{
             width: "80%",
           }}
@@ -73,6 +73,12 @@ export default function Images(
           }}
         />
         <Button
+          size="lg"
+          sx={{
+            width: "250px",
+            height: "50px",
+            margin: "auto",
+          }}
           color="cyan"
           radius="md"
           disabled={isAnswering}
@@ -105,7 +111,7 @@ export default function Images(
             }
           }}
         >
-          Generate Image
+          Generate Image 🖼️
         </Button>
         <Text size="md" weight={700}>
           {response}
