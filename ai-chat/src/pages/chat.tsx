@@ -60,7 +60,7 @@ export default function Chat(
           weight={200}
           align="center"
           sx={{
-            margin: "auto",
+            marginTop: "-15px",
             width: "100%",
           }}
         >
@@ -77,7 +77,7 @@ export default function Chat(
           }}
           sx={{
             width: "100%",
-            margin: "auto",
+            marginTop: "-10px",
           }}
           radius="md"
           marks={[
