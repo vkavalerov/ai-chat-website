@@ -193,7 +193,9 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
                     /
                   </Text>
                 ) : null}
-                <Text size="xl">{props.title}</Text>
+                <Text truncate size="xl">
+                  {props.title}
+                </Text>
               </Group>
             </Group>
           </Header>
