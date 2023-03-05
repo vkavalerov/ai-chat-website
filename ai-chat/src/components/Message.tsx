@@ -45,12 +45,12 @@ export default function Message(props: MessageProps) {
       }
     >
       <Container>
-        <Text size="xl" weight={400}>
+        <Text size="xl" weight={600}>
           {props.title}
         </Text>
         <Text
           size="sm"
-          weight={400}
+          weight={300}
           sx={{
             wordBreak: "break-word",
             whiteSpace: "pre-wrap",

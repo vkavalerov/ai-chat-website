@@ -196,7 +196,7 @@ export default function Chat(
             }
           }}
         >
-          Answer me!🤓
+          <Text weight="600">Answer me!🤔</Text>
         </Button>
       </Stack>
     </AiAppLayout>
