@@ -6,12 +6,13 @@ import {
   Stack,
   Box,
   Slider,
-  Container,
+  ActionIcon,
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useEffect, useState } from "react";
 import { Router, useRouter } from "next/router";
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
+import { IconArrowNarrowLeft } from "@tabler/icons-react";
 import Message from "../components/Message";
 import AiAppLayout from "@/components/AiAppLayout";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
@@ -64,6 +65,16 @@ export default function Chat() {
 
   return (
     <AiAppLayout title="Chat">
+      <ActionIcon
+        size="lg"
+        radius="md"
+        variant="default"
+        onClick={() => {
+          router.push("/discussions");
+        }}
+      >
+        <IconArrowNarrowLeft />
+      </ActionIcon>
       <Stack
         spacing="xs"
         sx={{
