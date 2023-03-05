@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import Head from "next/head";
 import { useMantineTheme } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import {
   IconMessageCircle,
   IconPhoto,
@@ -30,18 +30,47 @@ interface AiAppLayoutProps {
 }
 
 export default function AiAppLayout(props: AiAppLayoutProps) {
-  const user = useUser();
-  useEffect(() => {
-    if (!props.guest) {
-      if (!user) {
-        router.push("/");
-      }
-    }
-  });
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const router = useRouter();
+  const supabase = useSupabaseClient();
   const today = new Date();
+  const user = useUser();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user && !loading) {
+      router.push("/");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    async function fetchSession() {
+      const session = await supabase.auth.getSession();
+      if (!session) {
+        setLoading(false);
+        router.push("/");
+      } else {
+        setLoading(false);
+      }
+    }
+    fetchSession();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // useEffect(() => {
+  //   if (!user && !props.guest) {
+  //     router.push("/");
+  //   }
+  // }, [user]);
+
+  // if (!user) {
+  //   return <div>Loading...</div>;
+  // }
+
   return (
     <>
       <Head>
