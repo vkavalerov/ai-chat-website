@@ -19,10 +19,17 @@ export default function Account() {
           height: "100%",
         }}
       >
-        <Text size="xl" weight={700}>
-          Hi, {user?.email}!
+        <Text size="xl" weight={500}>
+          Your email: {user?.email}
         </Text>
         <Button
+          size="lg"
+          sx={{
+            width: "250px",
+            height: "50px",
+          }}
+          color="cyan"
+          radius="md"
           onClick={() => {
             supabaseClient.auth.signOut();
             router.push("/");
