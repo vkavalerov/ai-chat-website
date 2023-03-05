@@ -39,7 +39,7 @@ export default function Discussions() {
         setDiscussions(discussions);
       });
     }
-  }, [user, supabaseClient, discussions]);
+  }, []);
   return (
     <AiAppLayout title="Discussions">
       <Stack
