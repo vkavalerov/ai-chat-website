@@ -42,6 +42,16 @@ export default function Chat(
           maxWidth: "700px",
         }}
       >
+        <Text
+          size="xl"
+          weight={400}
+          align="center"
+          sx={{
+            marginBottom: "10px",
+          }}
+        >
+          Total tokens used: {usedTokens}, {(usedTokens / 1000) * 0.002}$
+        </Text>
         <Text size="lg" weight={300} align="center">
           Temperature
         </Text>
@@ -83,16 +93,6 @@ export default function Chat(
             width: "100%",
           }}
         ></Box>
-        <Text
-          size="lg"
-          weight={300}
-          align="center"
-          sx={{
-            marginBottom: "30px",
-          }}
-        >
-          Total tokens used: {usedTokens}, {(usedTokens / 1000) * 0.002}$
-        </Text>
       </Stack>
       <Stack
         justify="space-around"

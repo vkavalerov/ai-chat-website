@@ -31,7 +31,7 @@ export default function Images(
 
   return (
     <AiAppLayout title="Images">
-      <Text size="lg" weight={300} align="center">
+      <Text size="xl" weight={400} align="center">
         Total money spend:{money / 100}$
       </Text>
       <Stack
