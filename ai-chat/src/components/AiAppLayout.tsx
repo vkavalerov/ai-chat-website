@@ -176,7 +176,7 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
         }
         header={
           <Header height={60}>
-            <Group sx={{ height: "100%" }} px={30}>
+            <Group noWrap sx={{ height: "100%" }} px={30}>
               <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                 <Burger
                   opened={opened}
