@@ -169,29 +169,25 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
                     About
                   </Text>
                 </Button>
-              </Stack>
-            </Navbar.Section>
-            <Navbar.Section>
-              <Button
-                sx={{
-                  width: "100%",
-                }}
-                size="md"
-                radius="md"
-                variant="default"
-                onClick={() => {
-                  setOpened(false);
-                  router.push("/account");
-                }}
-              >
-                <Text
-                  sx={{
-                    color: router.pathname === "/account" ? "#58B5CC" : "#000",
+                <Button
+                  size="md"
+                  radius="md"
+                  variant="default"
+                  onClick={() => {
+                    setOpened(false);
+                    router.push("/account");
                   }}
                 >
-                  Your Account
-                </Text>
-              </Button>
+                  <Text
+                    sx={{
+                      color:
+                        router.pathname === "/account" ? "#58B5CC" : "#000",
+                    }}
+                  >
+                    Your Account
+                  </Text>
+                </Button>
+              </Stack>
             </Navbar.Section>
           </Navbar>
         }
