@@ -41,7 +41,7 @@ export default function Discussions() {
         setDiscussions(discussions);
       });
     }
-  }, [user]);
+  }, [user, loading]);
 
   useEffect(() => {
     async function fetchSession() {
