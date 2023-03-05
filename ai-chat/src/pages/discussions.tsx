@@ -1,8 +1,8 @@
 import { Stack } from "@mantine/core";
 import { useRouter } from "next/router";
-import AiAppLayout from "@/components/AiAppLayout";
+import AiAppLayout from "../components/AiAppLayout";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import Discussion from "@/components/discussion";
+import Discussion from "../components/discussion";
 import { Key, useEffect, useState } from "react";
 
 interface Discussion {
