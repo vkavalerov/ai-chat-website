@@ -1,11 +1,11 @@
 import { Stack } from "@mantine/core";
 import { useRouter } from "next/router";
 import AiAppLayout from "../components/AiAppLayout";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import Discussion from "../components/discussion";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Key, useEffect, useState } from "react";
 
-interface Discussion {
+interface DiscussionType {
   id: number;
   title: string;
 }
@@ -14,10 +14,10 @@ export default function Discussions() {
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
   const user = useUser();
-  const [discussions, setDiscussions] = useState<Discussion[]>();
+  const [discussions, setDiscussions] = useState<DiscussionType[]>();
   useEffect(() => {
     if (user) {
-      const fetchdiscussions = async (): Promise<Discussion[]> => {
+      const fetchdiscussions = async (): Promise<DiscussionType[]> => {
         const loadedDiscussions = await supabaseClient
           .from("discussions")
           .select("*")
