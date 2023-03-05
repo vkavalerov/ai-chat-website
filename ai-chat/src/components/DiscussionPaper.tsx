@@ -6,7 +6,7 @@ interface DiscussionProps {
   id: number;
 }
 
-export default function Discussion(props: DiscussionProps) {
+export default function DiscussionPaper(props: DiscussionProps) {
   const router = useRouter();
   return (
     <Paper

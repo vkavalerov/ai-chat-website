@@ -1,11 +1,11 @@
 import { Stack } from "@mantine/core";
 import { useRouter } from "next/router";
 import AiAppLayout from "../components/AiAppLayout";
-import Discussion from "../components/Discussion";
+import DiscussionPaper from "../components/DiscussionPaper";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Key, useEffect, useState } from "react";
 
-interface DiscussionType {
+interface DiscussionProps {
   id: number;
   title: string;
 }
@@ -14,10 +14,10 @@ export default function Discussions() {
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
   const user = useUser();
-  const [discussions, setDiscussions] = useState<DiscussionType[]>();
+  const [discussions, setDiscussions] = useState<DiscussionProps[]>();
   useEffect(() => {
     if (user) {
-      const fetchdiscussions = async (): Promise<DiscussionType[]> => {
+      const fetchdiscussions = async (): Promise<DiscussionProps[]> => {
         const loadedDiscussions = await supabaseClient
           .from("discussions")
           .select("*")
@@ -51,7 +51,7 @@ export default function Discussions() {
         }}
       >
         {discussions?.map((discussion) => (
-          <Discussion
+          <DiscussionPaper
             key={discussion.id}
             id={discussion.id}
             title={discussion.title}
