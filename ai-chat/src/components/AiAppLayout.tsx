@@ -71,30 +71,6 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
                   leftIcon={
                     <IconMessageCircle
                       style={{
-                        color: router.pathname === "/chat" ? "#58B5CC" : "#000",
-                      }}
-                    />
-                  }
-                  size="md"
-                  radius="md"
-                  variant="default"
-                  onClick={() => {
-                    setOpened(false);
-                    router.push("/chat");
-                  }}
-                >
-                  <Text
-                    sx={{
-                      color: router.pathname === "/chat" ? "#58B5CC" : "#000",
-                    }}
-                  >
-                    Chat
-                  </Text>
-                </Button>
-                <Button
-                  leftIcon={
-                    <IconMessageCircle
-                      style={{
                         color:
                           router.pathname === "/discussions"
                             ? "#58B5CC"
