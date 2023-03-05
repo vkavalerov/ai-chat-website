@@ -46,10 +46,7 @@ export default function Discussions() {
   useEffect(() => {
     async function fetchSession() {
       const session = await supabaseClient.auth.getSession();
-      if (!session) {
-        setLoading(false);
-        router.push("/");
-      } else {
+      if (session) {
         setLoading(false);
       }
     }
