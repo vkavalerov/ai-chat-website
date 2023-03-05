@@ -109,7 +109,8 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
                   leftIcon={
                     <IconInfoCircle
                       style={{
-                        color: router.pathname === "/" ? "#58B5CC" : "#000",
+                        color:
+                          router.pathname === "/about" ? "#58B5CC" : "#000",
                       }}
                     />
                   }
@@ -118,12 +119,12 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
                   variant="default"
                   onClick={() => {
                     setOpened(false);
-                    router.push("/");
+                    router.push("/about");
                   }}
                 >
                   <Text
                     sx={{
-                      color: router.pathname === "/" ? "#58B5CC" : "#000",
+                      color: router.pathname === "/about" ? "#58B5CC" : "#000",
                     }}
                   >
                     About

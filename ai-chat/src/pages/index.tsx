@@ -1,26 +1,53 @@
-import { Button, Stack, Text } from "@mantine/core";
+import { Button, Title, Text, Container } from "@mantine/core";
 import { useRouter } from "next/router";
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { InferGetStaticPropsType } from "next";
 import AiAppLayout from "@/components/AiAppLayout";
 
-export default function Home() {
+export default function Home({
+  basePath,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const supabaseClient = useSupabaseClient();
+  const user = useUser();
   const router = useRouter();
-  return (
-    <AiAppLayout title="About">
-      <Stack
-        justify="center"
-        spacing="xl"
-        align="center"
+  if (!user) {
+    return (
+      <Container
+        size={420}
+        my={100}
         sx={{
+          margin: "auto",
+          width: "100%",
           height: "100%",
         }}
       >
-        <Text size="xl" weight={700}>
+        <Title size="xl" weight={700} align="center">
           Hi, You are on my AI Playground Website!
-        </Text>
-        <Text size="xl" weight={700}>
-          Have fun 😊
-        </Text>
-      </Stack>
-    </AiAppLayout>
-  );
+        </Title>
+        <Auth
+          supabaseClient={supabaseClient}
+          redirectTo={basePath}
+          appearance={{ theme: ThemeSupa }}
+          providers={["google"]}
+        />
+      </Container>
+    );
+  } else {
+    router.push("/account");
+  }
+}
+
+export async function getStaticProps() {
+  var basePath = "";
+  if (process.env.CF_PAGES_URL !== undefined) {
+    basePath = process.env.CF_PAGES_URL;
+  } else {
+    console.log("No CF_PAGES_URL found");
+  }
+  return {
+    props: { basePath: basePath }, // will be passed to the page component as props
+  };
+  // ...
 }
