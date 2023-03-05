@@ -36,7 +36,7 @@ export default function Images(
       </Text>
       <Stack
         justify="space-around"
-        spacing="xl"
+        spacing="lg"
         align="center"
         sx={{
           margin: "auto",
