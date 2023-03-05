@@ -13,20 +13,31 @@ import {
 } from "@mantine/core";
 import Head from "next/head";
 import { useMantineTheme } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IconMessageCircle,
   IconPhoto,
   IconInfoCircle,
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
+import { useUser } from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 interface AiAppLayoutProps {
   children: React.ReactNode;
   title?: string;
+  guest?: boolean;
 }
 
 export default function AiAppLayout(props: AiAppLayoutProps) {
+  const user = useUser();
+  useEffect(() => {
+    if (!props.guest) {
+      if (!user) {
+        router.push("/");
+      }
+    }
+  });
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const router = useRouter();
