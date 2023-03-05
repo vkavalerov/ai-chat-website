@@ -16,8 +16,10 @@ export default function Discussions() {
   const supabaseClient = useSupabaseClient();
   const user = useUser();
   const [discussions, setDiscussions] = useState<DiscussionProps[]>();
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (user) {
+    if (user && !loading) {
       const fetchdiscussions = async (): Promise<DiscussionProps[]> => {
         const loadedDiscussions = await supabaseClient
           .from("discussions")
@@ -39,7 +41,21 @@ export default function Discussions() {
         setDiscussions(discussions);
       });
     }
+  }, [user]);
+
+  useEffect(() => {
+    async function fetchSession() {
+      const session = await supabaseClient.auth.getSession();
+      if (!session) {
+        setLoading(false);
+        router.push("/");
+      } else {
+        setLoading(false);
+      }
+    }
+    fetchSession();
   }, []);
+
   return (
     <AiAppLayout title="Discussions">
       <Stack
