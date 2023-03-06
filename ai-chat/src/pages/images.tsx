@@ -136,7 +136,7 @@ export default function Images(
 export async function getStaticProps() {
   return {
     props: {
-      openaiApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+      openaiApiKey: process.env.OPENAI_API_KEY,
       imagePassword: process.env.IMAGE_PASSWORD,
     },
   };
