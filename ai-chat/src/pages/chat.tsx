@@ -18,9 +18,9 @@ import AiAppLayout from "@/components/AiAppLayout";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Database } from "../lib/database.types";
 
-const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-
-export default function Chat() {
+export default function Chat(
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) {
   const router = useRouter();
   const supabaseClient = useSupabaseClient<Database>();
   const [discussionId, setdiscussionId] = useState("");
@@ -58,7 +58,7 @@ export default function Chat() {
   const [usedTokens, setUsedTokens] = useState(0);
   let key = 0;
   const configuration = new Configuration({
-    apiKey: OPENAI_API_KEY,
+    apiKey: props.openaiApiKey,
   });
   const openai = new OpenAIApi(configuration);
   const user = useUser();
@@ -290,4 +290,12 @@ export default function Chat() {
       </Stack>
     </AiAppLayout>
   );
+}
+
+export async function getStaticProps() {
+  return {
+    props: {
+      openaiApiKey: process.env.OPENAI_API_KEY,
+    },
+  };
 }

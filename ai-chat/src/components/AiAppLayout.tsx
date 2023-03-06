@@ -42,7 +42,7 @@ export default function AiAppLayout(props: AiAppLayoutProps) {
     if (!user && !loading) {
       router.push("/");
     }
-  }, [user]);
+  }, [user, loading]);
 
   useEffect(() => {
     async function fetchSession() {
