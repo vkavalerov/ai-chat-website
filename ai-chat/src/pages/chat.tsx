@@ -212,6 +212,7 @@ export default function Chat(
                   },
                 ],
               });
+              console.log(response.data.usage!.total_tokens)
               if (response.data.choices[0]) {
                 setUsedTokens(usedTokens + response.data.usage!.total_tokens);
                 if (!discussionId) {
