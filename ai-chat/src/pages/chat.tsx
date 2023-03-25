@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { InferGetStaticPropsType } from "next";
 import { useEffect, useState } from "react";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
 import { IconArrowNarrowLeft } from "@tabler/icons-react";
 import Message from "../components/Message";
