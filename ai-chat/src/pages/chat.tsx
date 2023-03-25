@@ -18,6 +18,8 @@ import AiAppLayout from "@/components/AiAppLayout";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Database } from "../lib/database.types";
 
+const PRICE_PER_1K_TOKENS = 0;
+
 export default function Chat(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
@@ -91,7 +93,8 @@ export default function Chat(
             marginBottom: "10px",
           }}
         >
-          Total tokens used: {usedTokens}, {(usedTokens / 1000) * 0.002}$
+          Total tokens used: {usedTokens},{" "}
+          {(usedTokens / 1000) * PRICE_PER_1K_TOKENS}$
         </Text>
         <Text size="lg" weight={300} align="center">
           Temperature
@@ -212,7 +215,7 @@ export default function Chat(
                   },
                 ],
               });
-              console.log(response.data.usage!.total_tokens)
+              console.log(response.data.usage!.total_tokens);
               if (response.data.choices[0]) {
                 setUsedTokens(usedTokens + response.data.usage!.total_tokens);
                 if (!discussionId) {
