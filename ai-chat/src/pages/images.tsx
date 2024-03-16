@@ -11,11 +11,11 @@ import {
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import AiAppLayout from "@/components/AiAppLayout";
 
 export default function Images(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   const router = useRouter();
   const [response, setResponse] = useState("");
@@ -24,10 +24,9 @@ export default function Images(
   const [money, setMoney] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [password, setPassword] = useState("");
-  const configuration = new Configuration({
+  const openai = new OpenAI({
     apiKey: props.openaiApiKey,
   });
-  const openai = new OpenAIApi(configuration);
 
   return (
     <AiAppLayout title="Images">
@@ -86,13 +85,13 @@ export default function Images(
             if (password === props.imagePassword) {
               setIsAnswering(true);
               try {
-                const response = await openai.createImage({
+                const response = await openai.images.generate({
                   prompt: message,
                   n: 1,
                   size: "1024x1024",
                 });
-                if (response.data.data[0].url) {
-                  setImageUrl(response.data.data[0].url);
+                if (response.data[0].url) {
+                  setImageUrl(response.data[0].url);
                   setMoney(money + 2);
                   setResponse("");
                   setIsAnswering(false);
