@@ -11,24 +11,25 @@ import {
 import { InferGetStaticPropsType } from "next";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
+import OpenAI from "openai";
 import { IconArrowNarrowLeft } from "@tabler/icons-react";
 import Message from "../components/Message";
 import AiAppLayout from "@/components/AiAppLayout";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Database } from "../lib/database.types";
+import { ChatCompletionMessageParam } from "openai/resources/chat/completions";
 
 const PRICE_PER_1K_TOKENS = 0;
 
 export default function Chat(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   const router = useRouter();
   const supabaseClient = useSupabaseClient<Database>();
   const [discussionId, setdiscussionId] = useState("");
-  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([
-    { role: "system", content: "You are a helpful assistant." },
-  ]);
+  const [messages, setMessages] = useState<
+    { role: string; content: string | null }[]
+  >([{ role: "system", content: "You are a helpful assistant." }]);
   useEffect(() => {
     if (user && router.query.id) {
       setdiscussionId(router.query.id as string);
@@ -38,7 +39,7 @@ export default function Chat(
           .select("*")
           .eq("id", router.query.id);
         if (response.error) throw response.error;
-        const outputDiscussion: ChatCompletionRequestMessage[] = [];
+        const outputDiscussion = [];
         console.log(response.data[0].discussion.data);
         const discussions = response.data[0].discussion.data;
         for (const discussion of discussions) {
@@ -59,10 +60,10 @@ export default function Chat(
   const [isAnswering, setIsAnswering] = useState(false);
   const [usedTokens, setUsedTokens] = useState(0);
   let key = 0;
-  const configuration = new Configuration({
+  const openai = new OpenAI({
     apiKey: props.openaiApiKey,
+    dangerouslyAllowBrowser: true,
   });
-  const openai = new OpenAIApi(configuration);
   const user = useUser();
 
   return (
@@ -87,7 +88,7 @@ export default function Chat(
       >
         <Text
           size="xl"
-          weight={400}
+          w={400}
           align="center"
           sx={{
             marginBottom: "10px",
@@ -158,7 +159,7 @@ export default function Chat(
                 <TextInput
                   color="cyan"
                   disabled={isAnswering}
-                  value={message.content}
+                  value={message.content!}
                   onChange={(e) => {
                     const newMessages = [...messages];
                     newMessages[index].content = e.currentTarget.value;
@@ -173,7 +174,7 @@ export default function Chat(
                 key={key++}
                 title={message.role === "user" ? "You" : "AI"}
                 type={message.role}
-                text={message.content}
+                text={message.content!}
               />
             );
           }
@@ -205,19 +206,19 @@ export default function Chat(
           onClick={async () => {
             setIsAnswering(true);
             try {
-              const response = await openai.createChatCompletion({
-                model: "gpt-3.5-turbo",
+              const response = await openai.chat.completions.create({
                 messages: [
-                  ...messages,
+                  ...(messages as ChatCompletionMessageParam[]),
                   {
                     role: "user",
                     content: message,
                   },
                 ],
+                model: "gpt-3.5-turbo",
               });
-              console.log(response.data.usage!.total_tokens);
-              if (response.data.choices[0]) {
-                setUsedTokens(usedTokens + response.data.usage!.total_tokens);
+              console.log(response.usage!.total_tokens);
+              if (response.choices[0]) {
+                setUsedTokens(usedTokens + response.usage!.total_tokens);
                 if (!discussionId) {
                   const supabaseResponse = await supabaseClient
                     .from("discussions")
@@ -232,7 +233,7 @@ export default function Chat(
                           },
                           {
                             role: "assistant",
-                            content: response.data.choices[0].message!.content,
+                            content: response.choices[0].message!.content,
                           },
                         ],
                       },
@@ -255,7 +256,7 @@ export default function Chat(
                           },
                           {
                             role: "assistant",
-                            content: response.data.choices[0].message!.content,
+                            content: response.choices[0].message!.content,
                           },
                         ],
                       },
@@ -274,7 +275,7 @@ export default function Chat(
                   },
                   {
                     role: "assistant",
-                    content: response.data.choices[0].message!.content,
+                    content: response.choices[0].message!.content,
                   },
                 ]);
                 setMessage("");
