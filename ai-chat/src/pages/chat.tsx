@@ -62,6 +62,7 @@ export default function Chat(
   let key = 0;
   const openai = new OpenAI({
     apiKey: props.openaiApiKey,
+    dangerouslyAllowBrowser: true,
   });
   const user = useUser();
 

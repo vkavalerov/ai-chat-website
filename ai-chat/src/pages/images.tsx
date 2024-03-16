@@ -3,7 +3,6 @@ import {
   Text,
   Textarea,
   Stack,
-  Box,
   Image,
   Center,
   PasswordInput,
@@ -26,6 +25,7 @@ export default function Images(
   const [password, setPassword] = useState("");
   const openai = new OpenAI({
     apiKey: props.openaiApiKey,
+    dangerouslyAllowBrowser: true,
   });
 
   return (
