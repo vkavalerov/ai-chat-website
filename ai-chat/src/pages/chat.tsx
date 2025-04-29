@@ -206,7 +206,7 @@ export default function Chat(
             setIsAnswering(true);
             try {
               const response = await openai.createChatCompletion({
-                model: "gpt-3.5-turbo",
+                model: "gpt-4o-mini",
                 messages: [
                   ...messages,
                   {
